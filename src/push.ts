@@ -16,7 +16,7 @@ import {
   getClient,
 } from './data';
 import type {ReadonlyJSONValue} from 'replicache';
-import {listSchema, shareSchema, todoSchema} from '../entities';
+import {listSchema, shareSchema, todoSchema} from './entities';
 
 const mutationSchema = z.object({
   id: z.number(),

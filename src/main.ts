@@ -4,12 +4,12 @@ import {fileURLToPath} from 'url';
 import express from 'express';
 import type Express from 'express';
 
-import { handleCreateUser, handleGetUserByUsername, handleUpdateGhPat, handleUpdateUserDetails } from '../endpoints/user';
+import { handleCreateUser, handleGetUserByUsername, handleUpdateGhPat, handleUpdateUserDetails } from './endpoints/user';
 
 import fs from 'fs';
-import {handlePush} from '../endpoints/replicache-push';
-import {handlePull} from '../endpoints/replicache-pull';
-import {handlePoke} from '../endpoints/handle-poke';
+import {handlePush} from './endpoints/replicache-push';
+import {handlePull} from './endpoints/replicache-pull';
+import {handlePoke} from './endpoints/handle-poke';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const portEnv = parseInt(process.env.PORT || '');

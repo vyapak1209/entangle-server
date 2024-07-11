@@ -1,10 +1,10 @@
-import { transact } from '../src/pg';
+import { transact } from '../pg';
 import {
     createUser,
     getUserByUsername,
     updateGhPat,
     updateUserDetails
-} from '../src/user';
+} from '../user';
 
 import type Express from 'express';
 

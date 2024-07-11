@@ -1,5 +1,5 @@
 import type Express from 'express';
-import {getPokeBackend} from '../src/poke.js';
+import {getPokeBackend} from '../poke.js';
 
 export async function handlePoke(
   req: Express.Request,
