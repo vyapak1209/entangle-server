@@ -35,7 +35,7 @@
     "format": "prettier --write './src/**/*.{js,jsx,json,ts,tsx,html,css,md}' '*.{cjs,js,jsx,json,ts,tsx,html,css,md}'",
     "check-format": "prettier --check './src/**/*.{js,jsx,json,ts,tsx,html,css,md}' '*.{cjs,js,jsx,json,ts,tsx,html,css,md}'",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
-    "build": "rm -rf ./dist && npm install && tsc",
+    "build": "rm -rf ./dist && npm install --save-dev && tsc",
     "check-types": "tsc --noEmit",
     "dev": "nodemon",
     "prod": "DATABASE_URL=postgresql://postgres:root@0.0.0.0:5433/entangle NODE_ENV=production nodemon --watch 'src/**/*.ts' --exec 'npx tsx src/main.ts'",
