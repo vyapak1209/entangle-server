@@ -39,6 +39,7 @@
     "check-types": "tsc --noEmit",
     "dev": "nodemon",
     "prod": "DATABASE_URL=postgresql://postgres:root@0.0.0.0:5433/entangle NODE_ENV=production nodemon --watch 'src/**/*.ts' --exec 'npx tsx src/main.ts'",
+    "prod:server": "NODE_ENV=production npx tsx src/main.ts",
     "prepack": "npm run lint && npm run build",
     "pretest": "npm run build",
     "test": "mocha --ui=tdd 'dist/**/*.test.js'"
