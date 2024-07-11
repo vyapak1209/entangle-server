@@ -4,6 +4,8 @@
 ARG NODE_VERSION=20.12.2
 FROM node:${NODE_VERSION}-slim as base
 
+RUN node -v & npm -v
+
 LABEL fly_launch_runtime="Node.js"
 
 # Node.js app lives here
@@ -19,6 +21,9 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
+# Install TypeScript globally
+RUN npm install -g typescript
+
 # Install node modules
 COPY --link package-lock.json package.json ./
 RUN npm ci --include=dev
@@ -26,8 +31,9 @@ RUN npm ci --include=dev
 # Copy application code
 COPY --link . .
 
-# Build application
-RUN npm run build
+RUN rm package-lock.json && rm -rf node_modules
+
+RUN npm install && npm install  --save-dev @types/node && npm run build
 
 # Remove development dependencies
 RUN npm prune --omit=dev
@@ -39,6 +45,9 @@ FROM base
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/package-lock.json /app/package-lock.json
+
+# Ensure runtime dependencies are installed
+RUN npm ci --omit=dev
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000

@@ -1,3 +1,4 @@
+// import dotenv from 'dotenv'
 import path from 'path';
 import {fileURLToPath} from 'url';
 import express from 'express';
@@ -16,6 +17,8 @@ const port = Number.isInteger(portEnv) ? portEnv : 8080;
 const host = process.env.HOST ?? '0.0.0.0';
 
 const default_dist = path.join(__dirname, '../dist/dist');
+
+// dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 
