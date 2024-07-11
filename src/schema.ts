@@ -1,6 +1,6 @@
 import type { Executor } from './pg';
 
-const schemaVersion = 6;
+const schemaVersion = 7;
 
 export async function createDatabase(executor: Executor) {
   console.log('creating database');
@@ -23,6 +23,15 @@ export async function createSchema(executor: Executor) {
     "insert into replicache_meta (key, value) values ('schemaVersion', $1)",
     [schemaVersion],
   );
+
+  await executor(`create table entangle_user (
+    userid varchar(36) not null,
+    username varchar(36) not null,
+    gh_repo_name varchar(36),
+    gh_pat varchar(255),
+    gh_pat_expiry timestamp(6),
+    lastmodified timestamp(6) not null
+    )`);
 
   await executor(`create table replicache_client_group (
     id varchar(36) primary key not null,
@@ -51,10 +60,18 @@ export async function createSchema(executor: Executor) {
     userid varchar(36) not null,
     lastmodified timestamp(6) not null
     )`);
+    
+    await executor(`do $$ begin
+    if not exists (select 1 from pg_type where typname = 'status_enum') then
+        create type status_enum as enum ('TODO', 'IN_PROGRESS', 'DONE');
+    end if;
+  end $$;`);
 
-  await executor(`create type status_enum as enum ('TODO', 'IN_PROGRESS', 'DONE')`);
-
-  await executor(`create type priority_enum as enum ('HIGH', 'MEDIUM', 'LOW')`);
+  await executor(`do $$ begin
+    if not exists (select 1 from pg_type where typname = 'priority_enum') then
+        create type priority_enum as enum ('HIGH', 'MEDIUM', 'LOW');
+    end if;
+  end $$;`);
 
   await executor(`create table item (
     id varchar(36) primary key not null,

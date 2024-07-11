@@ -4,6 +4,8 @@ import {fileURLToPath} from 'url';
 import express from 'express';
 import type Express from 'express';
 
+import { handleCreateUser, handleGetUserByUsername, handleUpdateGhPat, handleUpdateUserDetails } from '../endpoints/user';
+
 import fs from 'fs';
 import {handlePush} from '../endpoints/replicache-push';
 import {handlePull} from '../endpoints/replicache-pull';
@@ -33,6 +35,11 @@ app.use(express.urlencoded({extended: true}), express.json(), errorHandler);
 app.post('/api/replicache/push', handlePush);
 app.post('/api/replicache/pull', handlePull);
 app.get('/api/replicache/poke', handlePoke);
+
+app.post('/api/entangle/user', handleCreateUser);
+app.put('/api/entangle/user/update', handleUpdateUserDetails);
+app.put('/api/entangle/user/update-pat', handleUpdateGhPat);
+app.get('/api/entangle/user/:username', handleGetUserByUsername);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(default_dist));

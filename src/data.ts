@@ -23,6 +23,14 @@ export type Affected = {
   userIDs: string[];
 };
 
+export type UserRecord = {
+  userID: string;
+  username: string;
+  ghRepoName: string;
+  ghPat: string;
+  ghPatExpiry: Date;
+};
+
 export async function createList(
   executor: Executor,
   userID: string,
