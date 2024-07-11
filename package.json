@@ -41,7 +41,8 @@
     "start": "node dist/main.js",
     "prepack": "npm run lint && npm run build",
     "pretest": "npm run build",
-    "test": "mocha --ui=tdd 'dist/**/*.test.js'"
+    "test": "mocha --ui=tdd 'dist/**/*.test.js'",
+    "postinstall": "npm install typescript --save-dev @types/node"
   },
   "type": "module",
   "eslintConfig": {
